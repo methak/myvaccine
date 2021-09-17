@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Provider(models.Model):
@@ -8,3 +9,10 @@ class Provider(models.Model):
     appointment = models.BooleanField()
     walkin = models.BooleanField()
     hours = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+    
+    # Add this method
+    def get_absolute_url(self):
+        return reverse('detail', kwargs={'provider_id': self.id})

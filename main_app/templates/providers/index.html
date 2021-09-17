@@ -4,18 +4,20 @@
 <h1>Provider List</h1>
 
 {% for provider in providers %}
-  <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{ provider.name }}</span>
-      <p>Breed: {{ provider.breed }}</p>
-      <p>Description: {{ provider.description }}</p>
-      {% if provider.age > 0 %}
-        <p>Age: {{ provider.age }}</p>
-      {% else %}
-        <p>Age: Kitten</p>
-      {% endif %}
+    <div class="card">
+        <a href="{% url 'detail' provider.id %}">
+            <div class="card-content">
+                <span class="card-title">{{ provider.name }}</span>
+                <p>Address: {{ provider.address }}</p>
+                <p>Phone: {{ provider.phone }}</p>
+                {% if provider.appointment == True %}
+                    <p>Appointment : Yes </p>
+                {% else %}
+                    <p>Appointment : Not Required</p>
+                {% endif %}
+            </div>
+        </a>
     </div>
-  </div>
 {% endfor %}
 
 {% endblock %}

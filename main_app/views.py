@@ -1,5 +1,8 @@
+from main_app.models import Provider
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponse
+from .models import Provider
 
 
 # Create your views here.
@@ -7,20 +10,24 @@ def home(request):
     return HttpResponse('<h1>Hello /ᐠ｡‸｡ᐟ\ﾉ</h1>')
 
 def about(request):
-  return render(request, 'about.html')
+    return render(request, 'about.html')
 
 def providers_index(request):
-  return render(request, 'providers/index.html', { 'providers': providers })
+    providers = Provider.objects.all()
+    return render(request, 'providers/index.html', { 'providers': providers })
 
-class Provider:  # Note that parens are optional if not inheriting from another class
-  def __init__(self, name, breed, description, age):
-    self.name = name
-    self.breed = breed
-    self.description = description
-    self.age = age
+def providers_detail(request, provider_id):
+    provider = Provider.objects.get(id=provider_id)
+    return render(request, 'providers/detail.html', { 'provider': provider })
 
-providers = [
-  Provider('Lolo', 'tabby', 'foul little demon', 3),
-  Provider('Sachi', 'tortoise shell', 'diluted tortoise shell', 0),
-  Provider('Raven', 'black tripod', '3 legged cat', 4)
-]
+class ProviderCreate(CreateView):
+    model = Provider
+    fields = ['name', 'address', 'phone', 'appointment', 'walkin', 'hours']
+
+class ProviderUpdate(UpdateView):
+    model = Provider
+    fields = ['address', 'phone', 'hours']
+
+class ProviderDelete(DeleteView):
+    model = Provider
+    success_url = '/providers/'
