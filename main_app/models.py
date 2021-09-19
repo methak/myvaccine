@@ -1,7 +1,11 @@
 from django.db import models
 from django.urls import reverse
 
-# Create your models here.
+class Vaccine(models.Model):
+    name = models.CharField(max_length=100)
+    Type = models.CharField(max_length=100)
+    description = models.CharField(max_length=100)
+
 class Provider(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
@@ -9,6 +13,7 @@ class Provider(models.Model):
     appointment = models.BooleanField()
     walkin = models.BooleanField()
     hours = models.CharField(max_length=100)
+    vaccines = models.ManyToManyField(Vaccine)
 
     def __str__(self):
         return self.name
@@ -16,3 +21,6 @@ class Provider(models.Model):
     # Add this method
     def get_absolute_url(self):
         return reverse('detail', kwargs={'provider_id': self.id})
+
+
+    
