@@ -6,20 +6,20 @@
     <div class="col s6">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ provider.name }}</span>
+                <span class="card-title deep-purple-text darken-3"><b>{{ provider.name }}</b></span>
                 <p>Address: {{ provider.address }}</p>
                 <p>Phone: {{ provider.phone }}</p>
                 {% if provider.appointment == True %}
                     <p>
-                        <label>
-                            <input type="checkbox" class="filled-in" checked="checked" />
+                        
+                            <span class="material-icons green-text">check_circle</span>
                             <span class="black-text">Appointment</span>
-                        </label>
+                        
                     
                 {% else %}
                     <p>
                         <label>
-                            <input type="checkbox" class="filled-in" />
+                            <span class="material-icons">highlight_off</span>
                             <span>Appointment</span>
                         </label>
                     
@@ -27,15 +27,15 @@
                 {% if provider.walkin == True %}
                     
                         <label>
-                            <input type="checkbox" class="filled-in" checked="checked" />
+                            <span class="material-icons green-text">check_circle</span>
                             <span class="black-text">Walkin</span>
                         </label>
                     </p>
                 {% else %}
                     
                         <label>
-                            <input type="checkbox" class="filled-in" />
-                            <span class="black-text">Walkin</span>
+                            <span class="material-icons">highlight_off</span>
+                            <span class="">Walkin</span>
                         </label>
                     </p>
                 {% endif %}

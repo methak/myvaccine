@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3><span class="deep-purple-text darken-3">Sign Up</span></h3>
+
+{% if error_message %}<p class="red-text">{{ error_message }}</p>{% endif %}
+
+<form method="post" action="{% url 'signup' %}">
+
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="input-field col s6">
+            <!-- {{ field.label_tag }}<br> -->
+            <!-- {{ field }} -->
+            <span>{{ field.label_tag }}</span><br>
+            {{ field }}
+            
+            
+            {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+            {% endif %}
+            {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <input type="submit" class="btn deep-purple lighten-1" value="signup">
+    
+</form>
+<br>
+{% endblock %}

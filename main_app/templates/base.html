@@ -8,8 +8,10 @@
   <title>My Vaccine</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
-<body>
+<body class="indigo lighten-5">
   <header class="navbar-fixed">
     <nav class="deep-purple darken-3">
       <div class="nav-wrapper">
@@ -20,11 +22,13 @@
           <li><a href="{% url 'about' %}">About</a></li>
           <li><a href="{% url 'providers_create' %}">Add Provider</a></li>
           <li><a href="{% url 'index' %}">All Providers</a></li>
+          <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          <li><a href="{% url 'login' %}">Log In</a></li>
         </ul>
       </div>
     </nav>
   </header>
-  <main class="container">
+  <main class="container indigo lighten-5">
     {% block content %}
     {% endblock %}
   </main>

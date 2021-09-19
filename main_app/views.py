@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponse
 from .models import Provider, Vaccine
-
+from main_app.forms import UserForm
+from django.contrib.auth import login
 
 
 # Create your views here.
@@ -41,3 +42,19 @@ def assoc_vaccine(request, provider_id, vaccine_id):
   # Note that you can pass a toy's id instead of the whole toy object
   Provider.objects.get(id=provider_id).vaccines.add(vaccine_id)
   return redirect('detail', provider_id=provider_id)
+
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+        else:
+            error_message = 'Invalid sign up - try again'
+    
+    form = UserForm()
+    context = {'form': form, 'error_message': error_message}
+
+    return render(request, 'registration/signup.html', context)
