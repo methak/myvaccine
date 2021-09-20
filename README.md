@@ -32,7 +32,7 @@ From the beginning of our project, we knew we wanted to challenge ourselves to w
 ## Code Snippets
 ### favorite Code Snippets:
 
-![Metha code snipet]()
+![Metha code snipet](/code_snippet.png)
 
 
 
