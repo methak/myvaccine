@@ -1,23 +1,29 @@
-from main_app.models import Provider
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponse
-from .models import Provider, Vaccine
+from .models import Provider, Vaccine, VaccineCard
 from main_app.forms import UserForm
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
 def home(request):
-    return HttpResponse('<h1>Hello /ᐠ｡‸｡ᐟ\ﾉ</h1>')
+    vac_cards = VaccineCard.objects.filter(user=request.user)
+
+    return render(request, 'home.html', {'vac_cards': vac_cards})
+    
 
 def about(request):
     return render(request, 'about.html')
 
+@login_required
 def providers_index(request):
     providers = Provider.objects.all()
     return render(request, 'providers/index.html', { 'providers': providers })
 
+@login_required
 def providers_detail(request, provider_id):
     try:
         provider = Provider.objects.get(id=provider_id)
@@ -43,6 +49,18 @@ def assoc_vaccine(request, provider_id, vaccine_id):
   Provider.objects.get(id=provider_id).vaccines.add(vaccine_id)
   return redirect('detail', provider_id=provider_id)
 
+def book_vaccine(request, provider_id, vaccine_id):
+    u=request.user
+    print(u)
+    p=Provider.objects.get(id=provider_id)
+    print(p)
+    v=Vaccine.objects.get(id=vaccine_id)
+    print(v)
+    vaccine_card= VaccineCard(user=u, provider=p, vaccine=v)
+    vaccine_card.save()
+    
+    return redirect('index',)
+
 def signup(request):
     error_message = ''
     if request.method == 'POST':
@@ -50,7 +68,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('index')
+            return redirect('home')
         else:
             error_message = 'Invalid sign up - try again'
     

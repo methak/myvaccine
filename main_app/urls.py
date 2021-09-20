@@ -9,10 +9,10 @@ urlpatterns = [
     path('providers/create/', views.ProviderCreate.as_view(), name='providers_create'),
     path('providers/<int:pk>/update/', views.ProviderUpdate.as_view(), name='providers_update'),
     path('providers/<int:pk>/delete/', views.ProviderDelete.as_view(), name='providers_delete'),
-
-    #path('providers/<int:provider_id>/add_vaccine/', views.add_vaccine, name='add_vaccine'), 
+ 
     path('providers/<int:provider_id>/assoc_vaccine/<int:vaccine_id>/', views.assoc_vaccine, name='assoc_vaccine'),  
 
+    path('providers/<int:provider_id>/book_vaccine/<int:vaccine_id>/', views.book_vaccine, name='book_vaccine'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/signup/', views.signup, name='signup'),  
 ]

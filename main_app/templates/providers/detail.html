@@ -48,6 +48,40 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col s6">
+        <div>
+            <!-- Modal Trigger -->
+            <a class="waves-effect waves-light btn deep-purple lighten-1 modal-trigger right" href="#book">Book Appoinment</a>
+
+            <!-- Modal Structure -->
+            <div id="book" class="modal">
+                
+                <div class="modal-content indigo lighten-5">
+                    <span class="deep-purple-text lighten-1"><h4>Vaccine Appoinment</h4></span>
+                    
+                    <h5>{{provider.name}} {{user.username}}</h5>
+                    <p>
+                        {% if provider.vaccines.count %}
+                        {% for vaccine in provider.vaccines.all %}
+                            <p>{{ vaccine.id }} {{ vaccine.name }}</p>
+                        {% endfor %}
+                        {% endif %}
+                    </p>
+                    <label for="date">Date</label>
+                    <input type="text" class="datepicker" id="date">
+                    
+                </div>
+                <form action="{% url 'book_vaccine' provider.id 2 %}" method="post">
+                    {% csrf_token %}
+                <div class="modal-footer indigo lighten-5">
+                    <button type="submit" class="btn modal-close white-text deep-purple lighten-1">Book</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>    
 <hr>
 <div class="row">
     <div class="col s6">
@@ -57,7 +91,9 @@
         <div class="card">
             <div class="card-content">
                 <span class="card-title">
-                    <p>{{ vaccine.name }} {{ vaccine.description }}</p>
+                    <p>{{ vaccine.name }} {{ vaccine.description }}
+                        <i class="material-icons">beenhere</i>
+                    </p>
                 </span>
             </div>
         </div>
@@ -67,33 +103,45 @@
         {% endif %}
     </div>
     <!-- Available Vaccines will come after this line -->
+    {% if user.is_superuser%}
     <div class="col s6">
-        <h5>Available Vaccines</h5>
+        <h5>Vaccine List</h5>
         {% if vaccines.count %}
         {% for vaccine in vaccines.all %}
-        <div class="card"><form action="{% url 'assoc_vaccine' provider.id vaccine.id %}" method="post">
-            {% csrf_token %}
-            <div class="card-content">
-                <span class="card-title"></span>
+        <div class="card">
+            <form action="{% url 'assoc_vaccine' provider.id vaccine.id %}" method="post">
+                {% csrf_token %}
+                <div class="card-content">
+                    <span class="card-title"></span>
                     <h6>{{ vaccine.name }}</h6>
-                
-                
+                    
                     <button type="submit" class="btn deep-purple lighten-1">Add</button>
-                </form>
-            
-            </div>
-            
-                
-            
+                    
+                </div>    
+            </form>
         </div>
         {% endfor %}
         {% else %}
         <h6>{{provider.name}} Already Has All Vaccines Available</h6>
         {% endif %}
     </div>
+    {% endif %}
+    
 </div>
 
-<script>
 
+<script>
+    const dateEl = document.getElementById("date");
+    M.Datepicker.init(dateEl, {
+        format: "yyyy-mm-dd",
+        defaultDate: new Date(),
+        setDefaultDate: true,
+        autoClose: true,
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+    });
+  
 </script>
 {% endblock %}
