@@ -21,6 +21,27 @@
             </div>
         {% endfor %}
     </div>
+    <div class="col s6">
+        <div id='map' style='width: 100%; height: 600px;'></div>
+
+    </div>
 </div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWVlcGFuZGEiLCJhIjoiY2t0c2pkNjg1MWd5eDMwbWh0bGlrMWQ5byJ9.DWJ5RwcQ4lin2lBNdFaD-A';
+        var map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            center: [-118.52746582021382,34.24102096766782], // starting position [lng, lat]
+            zoom: 11 // starting zoom
+        });
+        // {% for address in addresses %}
+        var marker = new mapboxgl.Marker()
+            // 
+            .setLngLat([-118.55054945767392,34.23055012959992])
+            // .setPopup(new mapboxgl.Popup().setHTML("<p>test-address</p>"))
+            .addTo(map);
+        // {% endfor %}
+        </script>
+
 
 {% endblock %}

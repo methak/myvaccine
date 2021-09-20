@@ -59,7 +59,7 @@ def book_vaccine(request, provider_id, vaccine_id):
     vaccine_card= VaccineCard(user=u, provider=p, vaccine=v)
     vaccine_card.save()
     
-    return redirect('index',)
+    return redirect('home',)
 
 def signup(request):
     error_message = ''
