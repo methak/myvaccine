@@ -25,7 +25,7 @@ For this project, you will need to install the following dependencies:
 
 ## ERD
 From the beginning of our project, we knew we wanted to challenge ourselves to work with Two Models in our Mongo database. We knew we wanted to have a one to many relationship, and illustrated it in our Entity Relationship Diagram:
-![ERD](/main_app/static/my_vaccine_erd.png)
+![ERD](/my_vaccine_erd.png)
 
 
 
