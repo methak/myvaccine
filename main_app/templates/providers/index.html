@@ -1,21 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Provider List</h1>
-
-{% for provider in providers %}
-  <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{ provider.name }}</span>
-      <p>Breed: {{ provider.breed }}</p>
-      <p>Description: {{ provider.description }}</p>
-      {% if provider.age > 0 %}
-        <p>Age: {{ provider.age }}</p>
-      {% else %}
-        <p>Age: Kitten</p>
-      {% endif %}
+<h3>Provider List</h3>
+<div class="row">
+    <div class="col s6">
+        {% for provider in providers %}
+            <div class="card">
+                <a class="black-text" href="{% url 'detail' provider.id %}">
+                    <div class="card-content">
+                        <span class="card-title deep-purple-text darken-3"><b>{{ provider.name }}</b></span>
+                        <p>Address: {{ provider.address }}</p>
+                        <p>Phone: {{ provider.phone }}</p>
+                        {% if provider.appointment == True %}
+                            <p>Appointment : Yes </p>
+                        {% else %}
+                            <p>Appointment : Not Required</p>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
     </div>
-  </div>
-{% endfor %}
+    <div class="col s6">
+        <div id='map' style='width: 100%; height: 600px;'></div>
+
+    </div>
+</div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWVlcGFuZGEiLCJhIjoiY2t0c2pkNjg1MWd5eDMwbWh0bGlrMWQ5byJ9.DWJ5RwcQ4lin2lBNdFaD-A';
+        var map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            center: [-118.52746582021382,34.24102096766782], // starting position [lng, lat]
+            zoom: 11 // starting zoom
+        });
+        // {% for address in addresses %}
+        var marker = new mapboxgl.Marker()
+            // 
+            .setLngLat([-118.55054945767392,34.23055012959992])
+            // .setPopup(new mapboxgl.Popup().setHTML("<p>test-address</p>"))
+            .addTo(map);
+        // {% endfor %}
+        </script>
+
 
 {% endblock %}

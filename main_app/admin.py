@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Provider, Vaccine, VaccineCard
 
-# Register your models here.
+admin.site.register(Provider)
+admin.site.register(Vaccine)
+admin.site.register(VaccineCard)
