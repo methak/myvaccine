@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
+@login_required
 def home(request):
     vac_cards = VaccineCard.objects.filter(user=request.user)
 
@@ -44,11 +45,13 @@ class ProviderDelete(DeleteView):
     model = Provider
     success_url = '/providers/'
 
+@login_required
 def assoc_vaccine(request, provider_id, vaccine_id):
   # Note that you can pass a toy's id instead of the whole toy object
   Provider.objects.get(id=provider_id).vaccines.add(vaccine_id)
   return redirect('detail', provider_id=provider_id)
 
+@login_required
 def book_vaccine(request, provider_id, vaccine_id):
     u=request.user
     print(u)
